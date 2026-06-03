@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 160 14% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 14% 12%;
+
+    --primary: 142 70% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 150 30% 96%;
+    --secondary-foreground: 160 14% 18%;
+
+    --muted: 150 16% 96%;
+    --muted-foreground: 160 8% 42%;
+
+    --accent: 142 60% 95%;
+    --accent-foreground: 142 70% 24%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 150 14% 90%;
+    --input: 150 14% 88%;
+    --ring: 142 70% 42%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 160 22% 8%;
+    --foreground: 150 12% 96%;
+
+    --card: 160 20% 11%;
+    --card-foreground: 150 12% 96%;
+
+    --primary: 142 64% 46%;
+    --primary-foreground: 160 30% 6%;
+
+    --secondary: 160 16% 16%;
+    --secondary-foreground: 150 12% 96%;
+
+    --muted: 160 14% 16%;
+    --muted-foreground: 150 8% 64%;
+
+    --accent: 160 18% 18%;
+    --accent-foreground: 142 64% 70%;
+
+    --destructive: 0 62% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 14% 20%;
+    --input: 160 14% 22%;
+    --ring: 142 64% 46%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.bg-grid {
+  background-image: radial-gradient(
+    hsl(var(--border)) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
