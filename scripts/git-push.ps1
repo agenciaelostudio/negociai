@@ -18,7 +18,7 @@ Write-Host "Adicionando todos os arquivos..."
 & $gitExe -C "D:\AGENTES_AI\projetos\negociai" add -A 2>&1
 
 Write-Host "Commitando..."
-& $gitExe -C "D:\AGENTES_AI\projetos\negociai" commit -m "fix: remove caracteres invisiveis BOM (Byte Order Mark) das variaveis de ambiente" 2>&1
+& $gitExe -C "D:\AGENTES_AI\projetos\negociai" commit -m "debug: adiciona info de debug no endpoint generate para investigar paywall" 2>&1
 
 # Push
 Write-Host "Fazendo push..."

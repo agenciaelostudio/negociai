@@ -167,6 +167,16 @@ export default function PainelPage() {
         body: JSON.stringify(form),
       });
       if (res.status === 402) {
+        try {
+          const errBody = await res.json();
+          console.log("[Paywall Debug]", errBody);
+          if (errBody?.debug) {
+            toast.error(
+              `Debug: ${JSON.stringify(errBody.debug).slice(0, 200)}`,
+              { duration: 15000 },
+            );
+          }
+        } catch {}
         setShowPaywall(true);
         setGenerating(false);
         return;

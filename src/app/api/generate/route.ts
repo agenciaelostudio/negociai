@@ -55,9 +55,49 @@ export async function POST(req: Request) {
   // Gating de pagamento: só exige acesso quando o pagamento está habilitado.
   if (paymentsEnabled()) {
     const token = (await cookies()).get(ACCESS_COOKIE)?.value;
-    if (!verifyAccessToken(token)) {
+    const hasAccessCookie = verifyAccessToken(token);
+
+    let hasPaidDb = false;
+    let debugInfo: Record<string, unknown> = {
+      hasAccessCookie,
+      authClient: false,
+      user: null,
+      admin: false,
+      profileData: null,
+      queryError: null,
+    };
+
+    const authClient = await createClient();
+    debugInfo.authClient = !!authClient;
+    if (authClient) {
+      const { data: { user }, error: authError } = await authClient.auth.getUser();
+      debugInfo.user = user ? { id: user.id, email: user.email } : null;
+      debugInfo.authError = authError?.message ?? null;
+      if (user) {
+        const admin = getServerSupabase();
+        debugInfo.admin = !!admin;
+        if (admin) {
+          const { data, error } = await admin
+            .from("profiles")
+            .select("has_paid")
+            .eq("id", user.id)
+            .maybeSingle();
+          debugInfo.profileData = data;
+          debugInfo.queryError = error?.message ?? null;
+          if (data && data.has_paid) {
+            hasPaidDb = true;
+          }
+        }
+      }
+    }
+
+    if (!hasAccessCookie && !hasPaidDb) {
       return NextResponse.json(
-        { error: "Pagamento necessário.", code: "PAYMENT_REQUIRED" },
+        {
+          error: "Pagamento necessário.",
+          code: "PAYMENT_REQUIRED",
+          debug: debugInfo,
+        },
         { status: 402 },
       );
     }
