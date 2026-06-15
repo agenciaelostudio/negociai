@@ -1,16 +1,19 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-import { isAuthEnabled } from "@/lib/supabase/client";
+import { isAuthEnabled, cleanEnvVar } from "@/lib/supabase/client";
 
 export async function createClient() {
   if (!isAuthEnabled()) return null;
 
   const cookieStore = await cookies();
 
+  const url = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const key = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    key,
     {
       cookies: {
         getAll() {

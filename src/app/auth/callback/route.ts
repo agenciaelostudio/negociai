@@ -8,7 +8,8 @@ export async function GET(request: Request) {
   const next = searchParams.get("next") ?? "/painel";
 
   // Usar a URL oficial do site para evitar que o Next.js redirecione para localhost em produção
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://negociai-blue.vercel.app";
+  const siteUrlRaw = process.env.NEXT_PUBLIC_SITE_URL ?? "https://negociai-blue.vercel.app";
+  const siteUrl = siteUrlRaw.replace(/\uFEFF/g, "").trim().replace(/\/$/, "");
 
   if (code) {
     const supabase = await createClient();

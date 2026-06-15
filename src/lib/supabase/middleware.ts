@@ -1,9 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { cleanEnvVar } from "./client";
 
 export async function updateSession(request: NextRequest) {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const url = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  const key = cleanEnvVar(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   if (!url || !key) return NextResponse.next({ request });
 
   let response = NextResponse.next({ request });
