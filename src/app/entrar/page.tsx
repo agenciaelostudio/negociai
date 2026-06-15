@@ -55,7 +55,12 @@ export default function EntrarPage() {
 
   useEffect(() => {
     if (params.get("erro") === "auth") {
-      toast.error("Não foi possível entrar. Tente novamente.");
+      const detalhe = params.get("detalhe");
+      if (detalhe) {
+        toast.error(`Erro de autenticação: ${decodeURIComponent(detalhe)}`);
+      } else {
+        toast.error("Não foi possível entrar. Tente novamente.");
+      }
     }
   }, [params]);
 

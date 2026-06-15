@@ -18,7 +18,7 @@ Write-Host "Adicionando todos os arquivos..."
 & $gitExe -C "D:\AGENTES_AI\projetos\negociai" add -A 2>&1
 
 Write-Host "Commitando..."
-& $gitExe -C "D:\AGENTES_AI\projetos\negociai" commit -m "feat: adiciona autenticacao, painel, supabase e correcoes de deploy" 2>&1
+& $gitExe -C "D:\AGENTES_AI\projetos\negociai" commit -m "fix: resolve o redirecionamento de callback usando NEXT_PUBLIC_SITE_URL" 2>&1
 
 # Push
 Write-Host "Fazendo push..."
