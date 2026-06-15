@@ -1,0 +1,6 @@
+
+cd D:\AGENTES_AI\projetos\negociai
+$env:ASAAS_API_KEY = "$aact_prod_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OjdhZmYyMmIwLTk3NTMtNGEzYi1iNDI1LTEzOWU2YTNhYzZjMTo6JGFhY2hfM2FlYmFkZWEtYjJiOS00YzdhLTllMDItZWJlOWFmN2FlNTJh"
+$env:ASAAS_ENV = "production"
+.\scripts\setup-vercel-env.ps1
+npx vercel --prod

@@ -12,6 +12,18 @@
 
 ---
 
+## ⚠️ Asaas — bloqueio de Chaves de API
+
+Se ao abrir **Integrações → Chaves de API** aparecer *"Sorry, you're not authorized to view this page"*:
+
+1. A conta pode ser **usuário secundário** sem permissão de API — entre com o titular da conta.
+2. Ou use **Integrações → Acessar ambiente Sandbox** e gere a chave no Sandbox (testes).
+3. No `.env` / Vercel use `ASAAS_ENV=sandbox` com a chave do Sandbox, ou `production` com chave de produção.
+
+O **Wallet ID** (`29748a70-...`) **não** é a chave de API — é só para split entre contas Asaas.
+
+---
+
 ## 🔲 Falta você fazer (3 passos)
 
 ### 1. Variáveis de ambiente na Vercel

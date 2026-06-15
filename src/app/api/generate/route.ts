@@ -9,6 +9,7 @@ import {
 import { gerarFallback } from "@/lib/fallback";
 import { gerarComOpenAI, hasOpenAI } from "@/lib/openai";
 import { getServerSupabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import type { FormData, GenerateResponse, Mensagem, Tom } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -33,8 +34,14 @@ function parseForm(body: unknown): FormData {
 async function persist(form: FormData, mensagens: Mensagem[]) {
   const supabase = getServerSupabase();
   if (!supabase) return;
+  let userId: string | null = null;
+  const authClient = await createClient();
+  if (authClient) {
+    userId = (await authClient.auth.getUser()).data.user?.id ?? null;
+  }
   try {
     await supabase.from("generations").insert({
+      user_id: userId,
       profession: form.profissao,
       data: form,
       generated_content: mensagens,

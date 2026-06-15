@@ -16,7 +16,12 @@ function Add-VercelEnv($name, $value) {
 
 Add-VercelEnv "NEXT_PUBLIC_APP_URL" $appUrl
 Add-VercelEnv "NEXT_PUBLIC_PRICE_BRL" "19.90"
-Add-VercelEnv "ASAAS_ENV" "sandbox"
+
+$asaasEnv = $env:ASAAS_ENV
+if (-not $asaasEnv) {
+  if ($env:ASAAS_API_KEY -match '_prod_') { $asaasEnv = 'production' } else { $asaasEnv = 'sandbox' }
+}
+Add-VercelEnv "ASAAS_ENV" $asaasEnv
 
 if ($env:ASAAS_API_KEY) {
   Add-VercelEnv "ASAAS_API_KEY" $env:ASAAS_API_KEY
@@ -38,5 +43,16 @@ if ($env:OPENAI_API_KEY) {
   Add-VercelEnv "OPENAI_API_KEY" $env:OPENAI_API_KEY
 }
 
+if ($env:NEXT_PUBLIC_SUPABASE_URL) {
+  Add-VercelEnv "NEXT_PUBLIC_SUPABASE_URL" $env:NEXT_PUBLIC_SUPABASE_URL
+}
+if ($env:NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  Add-VercelEnv "NEXT_PUBLIC_SUPABASE_ANON_KEY" $env:NEXT_PUBLIC_SUPABASE_ANON_KEY
+}
+if ($env:SUPABASE_SERVICE_ROLE_KEY) {
+  Add-VercelEnv "SUPABASE_SERVICE_ROLE_KEY" $env:SUPABASE_SERVICE_ROLE_KEY
+}
+
 Write-Host ""
 Write-Host "Concluido. Rode: npx vercel --prod"
+Write-Host "Supabase: se faltar, use .\scripts\finalizar-supabase.ps1"

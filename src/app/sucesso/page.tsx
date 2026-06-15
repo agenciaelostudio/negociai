@@ -25,7 +25,7 @@ function SucessoContent() {
       const data: { paid?: boolean } = await res.json();
       if (data.paid) {
         setStatus("paid");
-        setTimeout(() => router.push("/formulario"), 1200);
+        setTimeout(() => router.push("/painel"), 1200);
       } else {
         setStatus("pending");
       }
@@ -67,7 +67,7 @@ function SucessoContent() {
               <CheckCircle2 className="mx-auto mt-6 size-12 text-primary" />
               <h1 className="mt-4 text-xl font-bold">Pagamento confirmado!</h1>
               <p className="mt-2 text-sm text-muted-foreground">
-                Acesso liberado. Redirecionando para o formulário...
+                Acesso liberado. Redirecionando para seu painel...
               </p>
             </>
           )}

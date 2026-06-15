@@ -8,6 +8,7 @@ import {
 } from "@/lib/access";
 import { isCheckoutPaidByRef } from "@/lib/asaas";
 import { getServerSupabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
@@ -40,15 +41,25 @@ export async function GET(req: Request) {
     return NextResponse.json({ paid: false });
   }
 
-  // Registra o pagamento (se Supabase estiver configurado).
   const supabase = getServerSupabase();
+  const authClient = await createClient();
+  const userId = authClient
+    ? (await authClient.auth.getUser()).data.user?.id
+    : null;
+
   if (supabase) {
     try {
       await supabase.from("payments").insert({
+        user_id: userId,
         plan: "negociai",
         amount: Number(process.env.NEXT_PUBLIC_PRICE_BRL || "19.90"),
         status: "confirmed",
       });
+      if (userId) {
+        await supabase
+          .from("profiles")
+          .upsert({ id: userId, has_paid: true });
+      }
     } catch {
       /* não bloqueia */
     }
