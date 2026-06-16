@@ -18,7 +18,7 @@ Write-Host "Adicionando todos os arquivos..."
 & $gitExe -C "D:\AGENTES_AI\projetos\negociai" add -A 2>&1
 
 Write-Host "Commitando..."
-& $gitExe -C "D:\AGENTES_AI\projetos\negociai" commit -m "debug: adiciona info de debug no endpoint generate para investigar paywall" 2>&1
+& $gitExe -C "D:\AGENTES_AI\projetos\negociai" commit -m "feat: adiciona guia, botao voltar e perfil na pagina de resultados" 2>&1
 
 # Push
 Write-Host "Fazendo push..."
