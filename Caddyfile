@@ -1,0 +1,54 @@
+# ============================================
+# Caddyfile — NegociAí
+# ============================================
+# Substitua negociai.com.br pelo seu domínio real
+# ============================================
+
+negociai.com.br {
+    # SSL automático via Let's Encrypt
+    tls admin@negociai.com.br
+
+    # Proxy para o Next.js
+    reverse_proxy app:3000 {
+        # Timeouts
+        flush_interval -1
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Logs
+    log {
+        output file /data/logs/access.log
+        format json
+    }
+
+    # Segurança básica
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        X-XSS-Protection "1; mode=block"
+        Referrer-Policy strict-origin-when-cross-origin
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    }
+
+    # Compressão
+    encode gzip
+}
+
+# ============================================
+# Redirecionamento HTTP → HTTPS
+# ============================================
+http://negociai.com.br {
+    redir https://negociai.com.br{uri} permanent
+}
+
+# ============================================
+# Admin UI (opcional - recomendo proteger)
+# ============================================
+# caddy.negociai.com.br {
+#     basicauth / {
+#         admin SENHA_SEGURA
+#     }
+#     reverse_proxy caddy:2019
+# }

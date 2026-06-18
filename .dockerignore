@@ -1,0 +1,34 @@
+# Dependências
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+.next
+
+# Ambiente local
+.env.local
+.env.*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker (não copiar compose para build)
+docker-compose.yml
+Caddyfile
+.dockerignore
+
+# Scripts locais
+scripts/*.ps1
