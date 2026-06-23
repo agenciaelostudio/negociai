@@ -27,7 +27,7 @@ REGRAS:
 - Em objeções, conduza a conversa de volta para o fechamento, sem ser agressivo.
 - NÃO invente preços fixos; use a faixa informada de forma natural quando fizer sentido.
 
-GERE EXATAMENTE estes atalhos (no mínimo 30 mensagens), mantendo o "atalho" e a "categoria" idênticos:
+GERE EXATAMENTE estes atalhos (mínimo 50 mensagens), mantendo o "atalho" e a "categoria" idênticos:
 ${atalhosLista}
 
 FORMATO DE SAÍDA:

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Post 7 - Nichos</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f0f0}
+.post{width:600px;height:600px;background:linear-gradient(160deg,#0f172a,#064e3b);position:relative;overflow:hidden;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.glow{position:absolute;width:400px;height:400px;border-radius:50%;filter:blur(80px)}
+.glow-1{top:-100px;right:-60px;background:#10b981;opacity:0.1}
+.glow-2{bottom:-80px;left:-80px;background:#059669;opacity:0.08}
+.content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;padding:50px}
+.tag{display:inline-flex;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);padding:8px 18px;border-radius:100px;font-size:12px;font-weight:600;color:#6ee7b7;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px;width:fit-content}
+h1{font-size:32px;font-weight:900;color:#fff;margin-bottom:6px}
+.sub{font-size:14px;color:#94a3b8;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:18px 12px;text-align:center;transition:all .2s}
+.card:hover{background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.2)}
+.card .icon{font-size:28px;margin-bottom:6px}
+.card .name{font-size:12px;font-weight:600;color:#fff}
+.card .count{font-size:10px;color:#64748b;margin-top:2px}
+.bottom-cta{margin-top:28px;padding:16px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:14px;text-align:center}
+.bottom-cta p{font-size:14px;color:#6ee7b7;font-weight:600}
+</style>
+</head>
+<body>
+<div class="post">
+<div class="glow glow-1"></div><div class="glow glow-2"></div>
+<div class="content">
+<div class="tag">Para Qualquer Nicho</div>
+<h1>Ja tem roteiro para<br>o seu servico?</h1>
+<p class="sub">O NegociAi se adapta ao seu negocio em minutos</p>
+<div class="grid">
+<div class="card"><div class="icon">💈</div><div class="name">Barbeiros</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">🎨</div><div class="name">Designers</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">💪</div><div class="name">Personal</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">📸</div><div class="name">Fotografos</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">💅</div><div class="name">Esteticistas</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">📊</div><div class="name">Consultores</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">🪚</div><div class="name">Marceneiros</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">⚖️</div><div class="name">Advogados</div><div class="count">15+ mensagens</div></div>
+<div class="card"><div class="icon">🦷</div><div class="name">Dentistas</div><div class="count">15+ mensagens</div></div>
+</div>
+<div class="bottom-cta"><p>E mais 20+ profissoes suportadas</p></div>
+</div>
+</div>
+</body>
+</html>

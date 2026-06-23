@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NegociAí — Redesenho</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..900&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    .hero-glow { background: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(59,130,246,.25), transparent); }
+    .phone-mockup { background: #1a1a2e; border-radius: 36px; padding: 12px; box-shadow: 0 25px 60px rgba(0,0,0,.3); }
+    .phone-screen { border-radius: 28px; overflow: hidden; background: #fff; height: 100%; }
+    .gradient-text { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .card-hover { transition: all .3s cubic-bezier(.4,0,.2,1); }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.08); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">N</div>
+        <span class="text-lg font-bold">Negoci<span class="text-blue-600">Aí</span></span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 text-sm text-gray-600">
+        <a href="#" class="hover:text-gray-900">Como funciona</a>
+        <a href="#" class="hover:text-gray-900">Para quem é</a>
+        <a href="#" class="hover:text-gray-900">O que você recebe</a>
+        <a href="#" class="hover:text-gray-900">Preço</a>
+      </div>
+      <a href="#" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-blue-600/25 transition-all">
+        Começar agora
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-glow pt-32 pb-20 px-6">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          Sistema de negociação inteligente
+        </div>
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight">
+          Nunca mais perca
+          <br/>
+          <span class="gradient-text">uma venda</span>
+          <br/>
+          no WhatsApp
+        </h1>
+        <p class="text-xl text-gray-600 max-w-lg leading-relaxed">
+          O <strong>NegociAí</strong> cria um kit completo de mensagens — objeções, follow-up e fechamento — personalizado para o seu serviço. Cole no WhatsApp e negocie como um profissional.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="#" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:shadow-xl hover:shadow-blue-600/30 transition-all">
+            Quero meu sistema agora
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#" class="inline-flex items-center justify-center gap-2 border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-2xl text-lg font-semibold hover:border-gray-300 transition-all">
+            Ver exemplos
+          </a>
+        </div>
+        <div class="flex items-center gap-8 pt-4">
+          <div class="flex -space-x-2">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold">RM</div>
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold">CS</div>
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white flex items-center justify-center text-white text-xs font-bold">BL</div>
+          </div>
+          <div>
+            <div class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <p class="text-sm text-gray-500">+ de 230 prestadores de serviço já usam</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Mockup -->
+      <div class="flex justify-center">
+        <div class="phone-mockup w-[320px]">
+          <div class="phone-screen p-4 space-y-3">
+            <div class="flex items-center gap-3 pb-3 border-b border-gray-100">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white text-sm">📱</div>
+              <div>
+                <p class="text-sm font-semibold">Cliente 🤔</p>
+                <p class="text-xs text-gray-400">online</p>
+              </div>
+            </div>
+            <div class="flex justify-start">
+              <div class="bg-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 text-sm max-w-[85%]">
+                Seu serviço é muito caro, achei outro mais barato
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <div class="bg-blue-600 text-white rounded-2xl rounded-br-sm px-4 py-3 text-sm max-w-[85%]">
+                Entendo seu ponto! Só quero que você considere: comigo você tem qualidade, compromisso e suporte. O barato às vezes sai caro. Quer que eu detalhe?
+              </div>
+            </div>
+            <div class="flex justify-start">
+              <div class="bg-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 text-sm max-w-[85%]">
+                Hmm, pode me explicar melhor?
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <div class="bg-blue-600 text-white rounded-2xl rounded-br-sm px-4 py-3 text-sm max-w-[85%]">
+                Claro! Vou te mandar um resumo organizado pra você comparar. 😊
+              </div>
+            </div>
+            <div class="pt-2 border-t border-gray-100 flex items-center gap-2 text-gray-400 text-xs">
+              NegociAí respondendo com o script certo
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BANNER -->
+  <section class="border-y border-gray-100 bg-gray-50/50 py-8">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="text-center">
+          <p class="text-3xl font-bold gradient-text">+50</p>
+          <p class="text-sm text-gray-500">mensagens por kit</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-bold gradient-text">9</p>
+          <p class="text-sm text-gray-500">etapas da venda</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-bold gradient-text">5 min</p>
+          <p class="text-sm text-gray-500">para configurar</p>
+        </div>
+        <div class="text-center">
+          <p class="text-3xl font-bold gradient-text">+200</p>
+          <p class="text-sm text-gray-500">variações de respostas</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAINEL (Página 2) -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-sm font-semibold uppercase tracking-widest text-blue-600">Painel do usuário</p>
+        <h2 class="text-4xl font-bold mt-3">Seus dados, seus scripts</h2>
+        <p class="text-gray-500 mt-2">Preencha uma vez, gere quantas vezes quiser.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="space-y-4">
+          <div class="bg-gray-50 rounded-2xl p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Nome profissional</label>
+                <div class="mt-1 h-10 bg-white rounded-xl border border-gray-200 px-3 flex items-center text-sm text-gray-400">Ex: Studio Camila Design</div>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Profissão</label>
+                <div class="mt-1 h-10 bg-white rounded-xl border border-gray-200 px-3 flex items-center text-sm text-gray-400">Ex: Designer gráfico</div>
+              </div>
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Serviços</label>
+              <div class="mt-1 h-20 bg-white rounded-xl border border-gray-200 px-3 py-2 text-sm text-gray-400">Descreva seus serviços...</div>
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Objeções que você mais ouve</label>
+              <div class="mt-1 h-16 bg-white rounded-xl border border-gray-200 px-3 py-2 text-sm text-gray-400">Ex: falam que é caro, que vão pensar, que já tem outro...</div>
+            </div>
+            <button class="w-full h-12 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg transition-all">
+              Gerar meus scripts
+            </button>
+          </div>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-center gap-2 text-sm font-semibold text-gray-700">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Você vai receber:
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm font-medium"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Apresentação</div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm font-medium"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Quebra de objeções</div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm font-medium"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Follow-up</div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm font-medium"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Fechamento</div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm font-medium"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Urgência</div>
+            <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-4 py-3 text-sm font-medium"><svg class="w-4 h-4 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Pós-venda</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADO (Página 3) -->
+  <section class="py-20 px-6 bg-gray-50">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-10">
+        <span class="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-1.5 rounded-full text-sm font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Seu sistema está pronto
+        </span>
+        <h2 class="text-3xl font-bold mt-4">Seu kit personalizado</h2>
+        <p class="text-gray-500 mt-2">53 mensagens prontas para copiar e colar no WhatsApp.</p>
+      </div>
+      <div class="flex gap-2 mb-8 bg-white rounded-2xl p-1.5 shadow-sm border border-gray-100">
+        <button class="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-semibold">📱 WhatsApp Business</button>
+        <button class="flex-1 py-3 px-4 rounded-xl text-gray-500 text-sm font-medium hover:bg-gray-100">💬 WhatsApp normal</button>
+      </div>
+      <div class="space-y-8">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white text-lg">🤝</div>
+            <h3 class="text-lg font-bold">Apresentação</h3>
+            <span class="text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full font-medium">2</span>
+          </div>
+          <div class="grid gap-3">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm card-hover">
+              <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <p class="font-semibold">Apresentação profissional</p>
+                  <div class="flex items-center gap-2 mt-1">
+                    <code class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-md font-mono font-medium">/apresentacao</code>
+                    <span class="inline-flex items-center gap-1 text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">digite / no chat</span>
+                  </div>
+                </div>
+                <button class="shrink-0 flex items-center gap-1.5 border border-gray-200 text-gray-600 px-3 py-2 rounded-xl text-sm font-medium hover:bg-gray-50 transition-all">Copiar</button>
+              </div>
+              <p class="mt-3 text-sm text-gray-600 leading-relaxed">Olá! Aqui é Studio Camila. Trabalho com design gráfico e ajudo empresas como a sua a ter uma identidade visual profissional...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTÓRICO (Página 4) -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-bold">Meus scripts salvos</h2>
+          <p class="text-gray-500 text-sm">Seus kits de mensagens gerados anteriormente.</p>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm card-hover cursor-pointer">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl">📋</div>
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold">Designer Gráfico</p>
+            <p class="text-xs text-gray-400 mt-1">📅 18 de junho de 2026, 14:30 · 🕐 2h atrás</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm card-hover cursor-pointer">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl">📋</div>
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold">Personal Trainer</p>
+            <p class="text-xs text-gray-400 mt-1">📅 15 de junho de 2026, 09:15 · 🕐 3d atrás</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+        <div class="flex items-center gap-4 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm card-hover cursor-pointer">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl">📋</div>
+          <div class="flex-1 min-w-0">
+            <p class="font-semibold">Barbeiro</p>
+            <p class="text-xs text-gray-400 mt-1">📅 10 de junho de 2026, 18:00 · 🕐 8d atrás</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="py-20 px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <div class="max-w-2xl mx-auto text-center space-y-6">
+      <h2 class="text-4xl font-bold">Pronto para nunca mais perder uma venda?</h2>
+      <p class="text-gray-400 text-lg">Mais de 230 prestadores de serviço já transformaram o WhatsApp em máquina de fechar negócios.</p>
+      <a href="#" class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl text-lg font-semibold hover:shadow-xl hover:shadow-blue-600/30 transition-all">
+        Começar agora — R$ 19,90
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <p class="text-sm text-gray-500">Pagamento único · PIX ou cartão · Acesso imediato</p>
+    </div>
+  </section>
+
+</body>
+</html>

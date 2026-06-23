@@ -28,15 +28,52 @@ export const CATALOGO: AtalhoSpec[] = [
   { categoria: "info", atalho: "/agendar", titulo: "Coletar dados para agendar" },
   { categoria: "info", atalho: "/formaspagamento", titulo: "Formas de pagamento" },
 
-  // Objeções
+  // ── OBJEÇÕES (8 existentes + 22 novas = 30) ───────────────
+  // Preço/Valor
   { categoria: "objecoes", atalho: "/caro", titulo: "Cliente achou caro" },
   { categoria: "objecoes", atalho: "/desconto", titulo: "Cliente pede desconto" },
+  { categoria: "objecoes", atalho: "/semvalor", titulo: "Cliente não vê valor no serviço" },
+  { categoria: "objecoes", atalho: "/promocao", titulo: "Cliente esperando promoção" },
+
+  // Indecisão
   { categoria: "objecoes", atalho: "/pensar", titulo: "Cliente vai pensar" },
   { categoria: "objecoes", atalho: "/esposa", titulo: "Vai falar com esposa/marido" },
   { categoria: "objecoes", atalho: "/pesquisar", titulo: "Cliente quer pesquisar" },
-  { categoria: "objecoes", atalho: "/orcamento", titulo: "Pedido de orçamento" },
   { categoria: "objecoes", atalho: "/comparando", titulo: "Cliente está comparando" },
+
+  // Tempo/Prioridade
+  { categoria: "objecoes", atalho: "/semtempo", titulo: "Cliente sem tempo / ocupado" },
+  { categoria: "objecoes", atalho: "/depois", titulo: "Cliente diz 'depois eu vejo'" },
+  { categoria: "objecoes", atalho: "/naoagora", titulo: "Cliente diz que não é prioridade" },
+  { categoria: "objecoes", atalho: "/rapidinho", titulo: "Cliente quer algo rápido e simples" },
+
+  // Financeiro
+  { categoria: "objecoes", atalho: "/orcamento", titulo: "Pedido de orçamento" },
   { categoria: "objecoes", atalho: "/semdinheiro", titulo: "Cliente sem dinheiro agora" },
+  { categoria: "objecoes", atalho: "/sinal", titulo: "Cliente questiona pagamento adiantado" },
+
+  // Concorrência/Confiança
+  { categoria: "objecoes", atalho: "/tenhoutro", titulo: "Já tem outro profissional" },
+  { categoria: "objecoes", atalho: "/naoconfio", titulo: "Cliente já teve má experiência" },
+  { categoria: "objecoes", atalho: "/concorrencia", titulo: "Concorrente é mais barato" },
+  { categoria: "objecoes", atalho: "/provas", titulo: "Cliente quer ver resultados antes" },
+  { categoria: "objecoes", atalho: "/caso_especial", titulo: "Cliente acha que é um caso diferente" },
+
+  // Decisão/Burocracia
+  { categoria: "objecoes", atalho: "/chefe", titulo: "Precisa falar com chefe/sócio" },
+  { categoria: "objecoes", atalho: "/garantia", titulo: "Cliente pede garantia" },
+  { categoria: "objecoes", atalho: "/autorizacao", titulo: "Cliente precisa de autorização" },
+
+  // Pós-contato
+  { categoria: "objecoes", atalho: "/silencio", titulo: "Cliente leu e não respondeu" },
+  { categoria: "objecoes", atalho: "/cancelar", titulo: "Cliente quer cancelar" },
+  { categoria: "objecoes", atalho: "/reclamacao", titulo: "Cliente insatisfeito" },
+
+  // Outras
+  { categoria: "objecoes", atalho: "/distancia", titulo: "Cliente reclama da distância" },
+  { categoria: "objecoes", atalho: "/naoentendi", titulo: "Cliente não entende o serviço" },
+  { categoria: "objecoes", atalho: "/modalidade", titulo: "Cliente prefere outra modalidade" },
+  { categoria: "objecoes", atalho: "/reuniao", titulo: "Cliente quer reunião antes" },
 
   // Follow-up
   { categoria: "followup", atalho: "/fup1", titulo: "Follow-up 1 dia" },

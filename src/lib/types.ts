@@ -33,7 +33,7 @@ export interface Mensagem {
 
 export interface GenerateResponse {
   mensagens: Mensagem[];
-  source: "openai" | "fallback";
+  source: "groq" | "openai" | "fallback";
 }
 
 export const CATEGORIA_LABELS: Record<Categoria, string> = {

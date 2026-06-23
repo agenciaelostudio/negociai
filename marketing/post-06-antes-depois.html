@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Post 6 - Antes vs Depois</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f0f0}
+.post{width:600px;height:600px;position:relative;overflow:hidden;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3);display:flex}
+.half{flex:1;padding:40px 30px;display:flex;flex-direction:column;justify-content:center}
+.before{background:linear-gradient(180deg,#1a1a1a,#0f0f0f)}
+.after{background:linear-gradient(180deg,#064e3b,#0a2e1f)}
+.divider{width:2px;background:rgba(255,255,255,0.08);position:relative}
+.divider svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)rotate(90deg);width:24px;height:24px;stroke:#10b981;fill:none;stroke-width:2}
+.label-b{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:20px}
+.before .label-b{color:#ef4444}
+.after .label-b{color:#10b981}
+h2{font-size:24px;font-weight:800;color:#fff;margin-bottom:14px;line-height:1.2}
+.b-item{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.b-item svg{width:18px;height:18px;fill:none;stroke-width:2}
+.before .b-item svg{stroke:#ef4444}
+.after .b-item svg{stroke:#10b981}
+.b-item span{font-size:13px;color:#94a3b8}
+.result-highlight{margin-top:18px;padding:14px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:12px;text-align:center}
+.result-highlight p{font-size:20px;font-weight:800;color:#34d399}
+.result-highlight span{font-size:12px;color:#64748b;display:block;margin-top:2px;font-weight:400}
+</style>
+</head>
+<body>
+<div class="post">
+<div class="half before">
+<div class="label-b">Sem Roteiro</div>
+<h2>Improvisando<br>nas conversas</h2>
+<div class="b-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Cliente pede desconto e voce trava</span></div>
+<div class="b-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Demora horas pra responder</span></div>
+<div class="b-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Follow-up generico que parece spam</span></div>
+</div>
+<div class="divider"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+<div class="half after">
+<div class="label-b">Com NegociAi</div>
+<h2>Fechando<br>com confianca</h2>
+<div class="b-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Resposta profissional na hora</span></div>
+<div class="b-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Kit pronto em 5 minutos</span></div>
+<div class="b-item"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span>Follow-up que reativa vendas</span></div>
+<div class="result-highlight"><p>3x mais fechamentos</p><span>na primeira semana usando</span></div>
+</div>
+</div>
+</body>
+</html>

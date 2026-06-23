@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Post 9 - CTA Final</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Outfit',sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f0f0}
+.post{width:600px;height:600px;background:linear-gradient(145deg,#064e3b,#0a2e1f);position:relative;overflow:hidden;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.glow{position:absolute;border-radius:50%;filter:blur(100px)}
+.glow-1{width:500px;height:500px;top:-200px;left:-100px;background:#10b981;opacity:0.15}
+.glow-2{width:400px;height:400px;bottom:-150px;right:-100px;background:#34d399;opacity:0.1}
+.glow-3{width:300px;height:300px;top:40%;left:40%;background:#059669;opacity:0.08}
+.content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px;text-align:center}
+.logo-elos{display:flex;align-items:center;gap:8px;margin-bottom:30px;padding:10px 24px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:100px}
+.logo-elos span{font-size:12px;color:#94a3b8;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+h1{font-size:42px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:16px}
+h1 span{background:linear-gradient(135deg,#34d399,#6ee7b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+p{font-size:16px;color:#94a3b8;line-height:1.6;max-width:420px;margin-bottom:32px}
+.cta-group{display:flex;flex-direction:column;gap:12px;align-items:center}
+.cta-primary{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:18px 44px;border-radius:14px;font-size:18px;font-weight:700;text-decoration:none;box-shadow:0 8px 32px rgba(16,185,129,0.3);transition:all .2s}
+.cta-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(16,185,129,0.4)}
+.cta-secondary{font-size:13px;color:#64748b;text-decoration:none;transition:color .2s}
+.cta-secondary:hover{color:#6ee7b7}
+.stats-mini{display:flex;gap:30px;margin-bottom:24px}
+.s-mini{text-align:center}
+.s-mini .n{font-size:22px;font-weight:800;color:#34d399}
+.s-mini .l{font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="post">
+<div class="glow glow-1"></div><div class="glow glow-2"></div><div class="glow glow-3"></div>
+<div class="content">
+<div class="logo-elos"><span>Produto Elo Studio</span></div>
+<h1>Seu WhatsApp<br>vai vender muito<br><span>mais em 5 minutos</span></h1>
+<p>Sem mensalidade. Sem complicacao. Um pagamento unico e voce tem um sistema completo de negociacao no seu celular.</p>
+<div class="stats-mini">
+<div class="s-mini"><div class="n">150+</div><div class="l">Usuarios</div></div>
+<div class="s-mini"><div class="n">5 min</div><div class="l">Configuracao</div></div>
+<div class="s-mini"><div class="n">50+</div><div class="l">Mensagens</div></div>
+</div>
+<div class="cta-group">
+<a class="cta-primary" href="https://negociai-blue.vercel.app">COMECAR AGORA <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+<a class="cta-secondary" href="#">Ver exemplos de conversas</a>
+</div>
+</div>
+</div>
+</body>
+</html>

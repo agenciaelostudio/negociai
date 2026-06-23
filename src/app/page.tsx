@@ -1,9 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
   Ban,
   Check,
   Clock,
+  Menu,
   MessageSquareText,
   Quote,
   ShieldCheck,
@@ -148,112 +152,236 @@ const faq = [
 const preco = process.env.NEXT_PUBLIC_PRICE_BRL || "19,90";
 
 export default function LandingPage() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
-    <main className="min-h-screen">
-      <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur-md">
+    <main className="min-h-screen" style={{ fontFamily: "'Outfit', sans-serif" }}>
+      {/* Navbar - Fixed */}
+      <header className="fixed top-0 z-50 w-full border-b border-border/40 bg-white/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between gap-4">
-          <Logo />
-          <nav className="hidden items-center gap-6 text-sm text-muted-foreground md:flex">
-            <Link href="#exemplos" className="hover:text-foreground">
+          <Link href="/" className="shrink-0">
+            <Logo />
+          </Link>
+          <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
+            <Link
+              href="#exemplos"
+              className="transition-colors hover:text-foreground"
+            >
               Exemplos
             </Link>
-            <Link href="#beneficios" className="hover:text-foreground">
+            <Link
+              href="#beneficios"
+              className="transition-colors hover:text-foreground"
+            >
               Benefícios
             </Link>
-            <Link href="#como-funciona" className="hover:text-foreground">
+            <Link
+              href="#como-funciona"
+              className="transition-colors hover:text-foreground"
+            >
               Como funciona
             </Link>
-            <Link href="#preco" className="hover:text-foreground">
+            <Link
+              href="#preco"
+              className="transition-colors hover:text-foreground"
+            >
               Preço
             </Link>
           </nav>
-          <StartButton size="sm">
-            Começar agora <ArrowRight />
-          </StartButton>
+          <div className="hidden md:block">
+            <StartButton size="sm">
+              Começar agora <ArrowRight />
+            </StartButton>
+          </div>
+          <button
+            className="flex md:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Menu"
+          >
+            <Menu className="size-6" />
+          </button>
         </div>
+        {mobileOpen && (
+          <div className="border-t bg-background px-4 pb-4 pt-2 md:hidden">
+            <nav className="flex flex-col gap-3 text-sm font-medium text-muted-foreground">
+              <Link
+                href="#exemplos"
+                className="rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                onClick={() => setMobileOpen(false)}
+              >
+                Exemplos
+              </Link>
+              <Link
+                href="#beneficios"
+                className="rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                onClick={() => setMobileOpen(false)}
+              >
+                Benefícios
+              </Link>
+              <Link
+                href="#como-funciona"
+                className="rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                onClick={() => setMobileOpen(false)}
+              >
+                Como funciona
+              </Link>
+              <Link
+                href="#preco"
+                className="rounded-lg px-3 py-2 transition-colors hover:bg-accent hover:text-accent-foreground"
+                onClick={() => setMobileOpen(false)}
+              >
+                Preço
+              </Link>
+              <StartButton size="sm" className="mt-2">
+                Começar agora <ArrowRight />
+              </StartButton>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-50" aria-hidden />
+      <section className="relative overflow-hidden pt-24 lg:pt-28">
+        {/* Blue glow background */}
         <div
-          className="absolute -right-32 top-20 -z-10 size-[420px] rounded-full bg-primary/15 blur-3xl"
+          className="pointer-events-none absolute -inset-x-40 -top-40 h-[700px] opacity-30"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 50% at 50% 40%, hsl(142 70% 42% / 0.25), transparent 70%)",
+          }}
           aria-hidden
         />
-        <div className="container relative grid gap-12 py-14 lg:grid-cols-2 lg:py-20">
-          <div className="flex flex-col justify-center animate-fade-up">
-            <div className="mb-5 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1 text-xs font-medium shadow-sm">
+        <div
+          className="pointer-events-none absolute -right-60 top-10 h-[500px] w-[500px] opacity-20"
+          style={{
+            background:
+              "radial-gradient(circle, hsl(210 100% 60% / 0.25), transparent 70%)",
+          }}
+          aria-hidden
+        />
+        <div className="container relative grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="flex flex-col justify-center py-10 lg:py-20">
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border bg-white px-4 py-1.5 text-xs font-medium shadow-sm">
                 <Sparkles className="size-3.5 text-primary" />
-                Sistema de negociação para WhatsApp
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-900 ring-1 ring-amber-200">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <Star key={i} className="size-3 fill-amber-400 text-amber-400" />
-                ))}
-                <span className="ml-1">Feito para quem vende no WhatsApp</span>
+                Sistema de negociação inteligente
               </span>
             </div>
-            <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.25rem]">
+            <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.5rem]">
               Pare de{" "}
-              <span className="text-destructive line-through decoration-2">
+              <span className="bg-gradient-to-r from-destructive to-destructive/70 bg-clip-text text-transparent">
                 perder vendas
               </span>{" "}
               por não saber o que responder
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              O NegociAí cria um{" "}
-              <strong className="font-semibold text-foreground">
-                kit completo de mensagens
-              </strong>{" "}
-              — objeções, follow-up e fechamento — personalizado para o seu
-              serviço. Cole no WhatsApp Business e negocie como um profissional.
+              O <strong className="font-semibold text-foreground">NegociAí</strong> cria
+              um kit completo de mensagens personalizadas para{" "}
+              <strong className="font-semibold text-foreground">seu</strong> serviço —
+              objeções, follow-up e fechamento. Cole no WhatsApp Business e negocie como
+              um profissional.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <StartButton size="xl" className="shadow-lg shadow-primary/25">
+              <StartButton
+                size="xl"
+                className="bg-gradient-to-r from-primary to-emerald-600 shadow-lg shadow-primary/30 hover:from-primary/90 hover:to-emerald-600/90"
+              >
                 Quero meu sistema agora <ArrowRight />
               </StartButton>
-              <Button asChild size="xl" variant="outline">
+              <Button asChild size="xl" variant="outline" className="border-2">
                 <Link href="#exemplos">Ver exemplos no WhatsApp</Link>
               </Button>
             </div>
-            <ul className="mt-6 grid gap-2 sm:grid-cols-2">
-              {[
-                "Entrega imediata após o pagamento",
-                "+30 mensagens organizadas por etapa",
-                "PIX ou cartão · pagamento único",
-                `A partir de R$ ${preco}`,
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                  <Check className="size-4 shrink-0 text-primary" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            {/* Social proof */}
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <div className="flex -space-x-2">
+                {["RM", "CS", "BL", "+"].map((init, i) => (
+                  <div
+                    key={init}
+                    className={`flex size-9 items-center justify-center rounded-full border-2 border-white text-xs font-bold shadow-sm ${
+                      i < 3
+                        ? "bg-primary/15 text-primary"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {init}
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-1">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star
+                    key={i}
+                    className="size-3.5 fill-amber-400 text-amber-400"
+                  />
+                ))}
+              </div>
+              <p className="text-sm font-medium text-muted-foreground">
+                <strong className="text-foreground">150+</strong> prestadores já usam
+              </p>
+            </div>
           </div>
-          <div className="flex flex-col items-center justify-center gap-4 animate-fade-up lg:items-end">
-            <WhatsAppChatMock
-              contactName={chatExamples[0].contactName}
-              tag={chatExamples[0].tag}
-              tagColor={chatExamples[0].tagColor}
-              messages={[...chatExamples[0].messages]}
-              tilt="right"
-            />
-            <p className="max-w-sm text-center text-xs text-muted-foreground lg:text-right">
-              Exemplo ilustrativo — o seu kit sai personalizado com seu serviço
-              e seu tom de voz.
-            </p>
+          {/* Phone mockup */}
+          <div className="flex items-center justify-center py-10 lg:py-20">
+            <div className="relative">
+              {/* Phone outer body */}
+              <div className="rounded-[2.5rem] border-[3px] border-zinc-700 bg-zinc-900 p-3 shadow-2xl shadow-primary/10">
+                {/* Notch */}
+                <div className="mx-auto mb-2 flex h-4 w-28 items-center justify-center rounded-full bg-zinc-800">
+                  <div className="size-2 rounded-full bg-zinc-700" />
+                </div>
+                {/* Screen */}
+                <div className="overflow-hidden rounded-[1.75rem] bg-white shadow-inner">
+                  <WhatsAppChatMock
+                    contactName={chatExamples[0].contactName}
+                    tag={chatExamples[0].tag}
+                    tagColor={chatExamples[0].tagColor}
+                    messages={[...chatExamples[0].messages]}
+                    tilt="none"
+                  />
+                </div>
+              </div>
+              {/* Floating badge */}
+              <div className="absolute -bottom-3 -right-3 z-10 animate-fade-up rounded-xl border bg-white px-4 py-2 shadow-lg">
+                <p className="text-xs font-medium text-muted-foreground">
+                  Pronto em{" "}
+                  <strong className="text-foreground">&lt;5 min</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Banner */}
+      <section className="border-y bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 py-8">
+        <div className="container">
+          <div className="grid grid-cols-2 gap-6 text-center md:grid-cols-4">
+            {[
+              { valor: "50+", label: "mensagens por kit" },
+              { valor: "9", label: "etapas da venda" },
+              { valor: "5 min", label: "para configurar" },
+              { valor: "200+", label: "variações de frases" },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="text-3xl font-extrabold md:text-4xl">
+                  <span className="bg-gradient-to-r from-primary to-emerald-600 bg-clip-text text-transparent">
+                    {s.valor}
+                  </span>
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground md:text-sm">
+                  {s.label}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Profissões marquee */}
-      <section className="border-y bg-secondary/60 py-4">
+      <section className="border-y bg-secondary/60 py-5">
         <div className="flex overflow-hidden">
-          <div className="flex min-w-full shrink-0 animate-marquee items-center gap-8 px-4">
+          <div className="flex min-w-full shrink-0 animate-marquee items-center gap-10 px-4">
             {[...profissoes, ...profissoes].map((p, i) => (
               <span
                 key={`${p}-${i}`}
@@ -266,34 +394,38 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Dor */}
-      <section className="container py-16 lg:py-20">
+      {/* Pain/Dor */}
+      <section className="container py-16 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             Você se identifica?
           </p>
-          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">
             O cliente some depois do orçamento e você não sabe o que mandar
           </h2>
         </div>
-        <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-4xl gap-5 sm:grid-cols-2">
           {[
-            "\"Vou pensar\" — e nunca mais responde",
-            "\"Está caro\" — e você só baixa o preço",
+            "\"Vou pensar\" e nunca mais responde",
+            "\"Está caro\" e você só baixa o preço",
             "Demora horas para responder e esfria o lead",
             "Follow-up genérico que parece spam",
           ].map((dor) => (
-            <div
+            <Card
               key={dor}
-              className="flex items-start gap-3 rounded-xl border border-destructive/20 bg-destructive/5 px-4 py-4"
+              className="border-destructive/20 shadow-sm transition-all hover:border-destructive/40 hover:shadow-md"
             >
-              <X className="mt-0.5 size-5 shrink-0 text-destructive" />
-              <p className="text-sm font-medium leading-snug">{dor}</p>
-            </div>
+              <CardContent className="flex items-start gap-4 p-5">
+                <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-lg bg-destructive/10 text-destructive">
+                  <X className="size-5" />
+                </span>
+                <p className="text-sm font-medium leading-snug">{dor}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
-        <p className="mx-auto mt-8 max-w-2xl text-center text-muted-foreground">
-          Não é falta de talento — é falta de um{" "}
+        <p className="mx-auto mt-10 max-w-2xl text-center text-muted-foreground">
+          Não é falta de talento é falta de um{" "}
           <strong className="text-foreground">roteiro de negociação</strong> no
           WhatsApp. O NegociAí resolve isso em minutos.
         </p>
@@ -303,20 +435,20 @@ export default function LandingPage() {
       <section id="exemplos" className="border-y bg-gradient-to-b from-secondary/50 to-background py-16 lg:py-20">
         <div className="container">
           <div className="mx-auto mb-4 max-w-2xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
               Prova social visual
             </p>
             <h2 className="mt-2 text-3xl font-bold sm:text-4xl">
               Veja como ficam as conversas no seu WhatsApp
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Exemplos ilustrativos de objeção, follow-up e fechamento — o seu kit
+              Exemplos ilustrativos de objeção, follow-up e fechamento o seu kit
               é gerado com os dados do seu negócio.
             </p>
           </div>
           <div className="mx-auto mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-6 rounded-2xl border bg-card/80 px-6 py-4 text-center shadow-sm">
             {[
-              { valor: "+30", label: "mensagens por kit" },
+              { valor: "+50", label: "mensagens por kit" },
               { valor: "4", label: "etapas da venda" },
               { valor: "5 min", label: "para configurar" },
             ].map((s) => (
@@ -397,7 +529,7 @@ export default function LandingPage() {
         <div className="mx-auto mb-10 max-w-2xl text-center">
           <h2 className="text-3xl font-bold">O que vem no seu kit</h2>
           <p className="mt-3 text-muted-foreground">
-            Mais de 30 mensagens divididas por etapa da venda — não é um PDF
+            Mais de 50 mensagens divididas por etapa da venda não é um PDF
             genérico.
           </p>
         </div>
@@ -436,10 +568,11 @@ export default function LandingPage() {
             {beneficios.map((b) => (
               <Card
                 key={b.title}
-                className="transition-all hover:border-primary/30 hover:shadow-md"
+                className="group overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg"
               >
-                <CardContent className="pt-6">
-                  <span className="mb-4 grid size-11 place-items-center rounded-lg bg-primary/10 text-primary">
+                <CardContent className="relative p-6">
+                  <div className="absolute -right-6 -top-6 size-20 rounded-full bg-primary/5 transition-all group-hover:scale-150" />
+                  <span className="mb-4 grid size-12 place-items-center rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary ring-1 ring-primary/10">
                     <b.icon className="size-5" />
                   </span>
                   <h3 className="font-semibold">{b.title}</h3>
@@ -461,24 +594,29 @@ export default function LandingPage() {
             Três passos. Menos de 5 minutos do pagamento ao WhatsApp configurado.
           </p>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {passos.map((p) => (
+        <div className="grid gap-8 md:grid-cols-3">
+          {passos.map((p, idx) => (
             <div
               key={p.n}
-              className="relative rounded-xl border bg-card p-6 shadow-sm"
+              className="relative rounded-2xl border bg-card p-8 shadow-sm transition-all hover:shadow-md"
             >
-              <span className="grid size-10 place-items-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+              <div className="absolute -top-4 left-8 flex size-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-emerald-600 text-lg font-bold text-white shadow-md">
                 {p.n}
-              </span>
-              <h3 className="mt-4 font-semibold">{p.t}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">{p.d}</p>
+              </div>
+              {idx < passos.length - 1 && (
+                <div className="absolute left-[4.25rem] top-6 hidden h-0.5 w-[calc(100%-6rem)] bg-gradient-to-r from-primary/30 to-transparent md:block" />
+              )}
+              <h3 className="mt-2 text-lg font-semibold">{p.t}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {p.d}
+              </p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Depoimentos */}
-      <section className="border-y bg-secondary/40 py-16">
+      {/* Testimonials */}
+      <section className="border-y bg-gradient-to-b from-secondary/40 to-background py-16">
         <div className="container">
           <div className="mx-auto mb-10 flex max-w-2xl flex-col items-center text-center">
             <Users className="mb-2 size-8 text-primary" />
@@ -491,10 +629,13 @@ export default function LandingPage() {
             {depoimentos.map((d) => {
               const chat = chatExamples[d.chatIndex];
               return (
-                <Card key={d.nome} className="overflow-hidden bg-card/80">
+                <Card
+                  key={d.nome}
+                  className="overflow-hidden bg-card/80 shadow-sm transition-all hover:shadow-md"
+                >
                   <CardContent className="p-0">
                     <div className="flex items-center gap-3 border-b px-5 py-4">
-                      <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary/15 text-sm font-bold text-primary">
+                      <span className="grid size-11 shrink-0 place-items-center rounded-full bg-gradient-to-br from-primary/20 to-primary/5 text-sm font-bold text-primary ring-1 ring-primary/20">
                         {d.iniciais}
                       </span>
                       <div>
@@ -545,7 +686,7 @@ export default function LandingPage() {
           </h2>
           <dl className="mt-10 space-y-4">
             {faq.map((item) => (
-              <div key={item.q} className="rounded-xl border bg-card px-5 py-4">
+              <div key={item.q} className="rounded-xl border bg-card px-5 py-4 shadow-sm transition-all hover:border-primary/20">
                 <dt className="font-semibold">{item.q}</dt>
                 <dd className="mt-2 text-sm text-muted-foreground">{item.a}</dd>
               </div>
@@ -558,7 +699,7 @@ export default function LandingPage() {
       <section id="preco" className="pb-20">
         <div className="container">
           <Card className="mx-auto max-w-2xl overflow-hidden border-primary/40 shadow-xl">
-            <div className="relative bg-primary px-8 py-8 text-center text-primary-foreground">
+            <div className="relative bg-gradient-to-br from-primary to-emerald-700 px-8 py-8 text-center text-primary-foreground">
               <p className="text-sm font-medium uppercase tracking-wide opacity-90">
                 Oferta de lançamento
               </p>
@@ -571,7 +712,7 @@ export default function LandingPage() {
                 </span>
               </p>
               <p className="mt-1 text-sm opacity-90">
-                pagamento único · acesso imediato · PIX ou cartão
+                pagamento único acesso imediato PIX ou cartão
               </p>
             </div>
             <CardContent className="space-y-3 p-8">
@@ -604,20 +745,47 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* CTA final */}
-      <section className="border-t bg-gradient-to-br from-primary/10 via-background to-accent/30 py-14">
-        <div className="container text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">
-            Seu próximo cliente está no WhatsApp.{" "}
-            <span className="text-primary">Esteja pronto para responder.</span>
+      {/* Final CTA */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 py-20">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-20"
+          style={{
+            background:
+              "radial-gradient(ellipse 50% 50% at 50% 50%, hsl(142 70% 42% / 0.3), transparent 70%)",
+          }}
+          aria-hidden
+        />
+        <div className="container relative text-center">
+          <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+            Seu próximo cliente está no WhatsApp
           </h2>
-          <StartButton size="xl" className="mt-8">
-            Começar agora por R$ {preco} <ArrowRight />
-          </StartButton>
+          <p className="mx-auto mt-4 max-w-xl text-zinc-400">
+            Esteja pronto para responder com o roteiro certo na hora certa.
+          </p>
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <StartButton
+              size="xl"
+              className="bg-gradient-to-r from-primary to-emerald-500 text-base shadow-lg shadow-primary/30 hover:from-primary/90 hover:to-emerald-500/90"
+            >
+              Começar agora por R$ {preco} <ArrowRight />
+            </StartButton>
+            <Button
+              asChild
+              size="xl"
+              variant="outline"
+              className="border-zinc-600 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+            >
+              <Link href="#como-funciona">Como funciona</Link>
+            </Button>
+          </div>
+          <p className="mt-6 text-sm text-zinc-500">
+            Pagamento único acesso imediato PIX ou cartão
+          </p>
         </div>
       </section>
 
-      <footer className="border-t">
+      {/* Footer */}
+      <footer className="border-t border-border/40">
         <div className="container flex flex-col items-center justify-between gap-4 py-8 text-sm text-muted-foreground sm:flex-row">
           <Logo className="text-base" iconClassName="size-4" />
           <p>

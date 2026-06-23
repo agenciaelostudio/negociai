@@ -8,6 +8,7 @@ import {
 } from "@/lib/access";
 import { gerarFallback } from "@/lib/fallback";
 import { gerarComOpenAI, hasOpenAI } from "@/lib/openai";
+import { gerarComGroq, hasGroq } from "@/lib/groq";
 import { getServerSupabase } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase/server";
 import type { FormData, GenerateResponse, Mensagem, Tom } from "@/lib/types";
@@ -122,7 +123,16 @@ export async function POST(req: Request) {
   let mensagens: Mensagem[] = [];
   let source: GenerateResponse["source"] = "fallback";
 
-  if (hasOpenAI()) {
+  if (hasGroq()) {
+    try {
+      mensagens = await gerarComGroq(form);
+      source = "groq";
+    } catch (err) {
+      console.error("Groq falhou, tentando OpenAI:", err);
+    }
+  }
+
+  if (mensagens.length < 40 && hasOpenAI()) {
     try {
       mensagens = await gerarComOpenAI(form);
       source = "openai";
@@ -132,7 +142,7 @@ export async function POST(req: Request) {
   }
 
   // Fallback se a IA não rodou ou retornou pouco conteúdo.
-  if (mensagens.length < 20) {
+  if (mensagens.length < 40) {
     mensagens = gerarFallback(form);
     source = "fallback";
   }
