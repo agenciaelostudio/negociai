@@ -42,15 +42,15 @@ function coerceMensagens(raw: unknown): Mensagem[] {
 
 /**
  * Chama a Groq e retorna as mensagens.
- * Usa o modelo 70B (qualidade) pra gerar e o 8B seria pra testes rápidos.
+ * Usa o modelo 70B (qualidade) pra gerar os 53 scripts personalizados.
  */
-export async function gerarComGroq(data: FormData): Promise<Mensagem[]> {
+export async function gerarComGroq(formData: FormData): Promise<Mensagem[]> {
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    throw new Error("GROQ_API_KEY não configurada");
+    throw new Error("GROQ_API_KEY nao configurada");
   }
 
-  const prompt = buildPrompt(data);
+  const prompt = buildPrompt(formData);
 
   const response = await fetch(GROQ_API, {
     method: "POST",
@@ -64,7 +64,7 @@ export async function gerarComGroq(data: FormData): Promise<Mensagem[]> {
         {
           role: "system",
           content:
-            "Você é um especialista em negociação e copywriting para WhatsApp. Responde SEMPRE com JSON válido.",
+            "Voce e um especialista em negociacao e copywriting para WhatsApp. Responde SEMPRE com JSON valido.",
         },
         { role: "user", content: prompt },
       ],
@@ -79,8 +79,8 @@ export async function gerarComGroq(data: FormData): Promise<Mensagem[]> {
     throw new Error(`Groq HTTP ${response.status}`);
   }
 
-  const data = await response.json();
-  const content = data.choices?.[0]?.message?.content ?? "{}";
+  const json = await response.json();
+  const content = json.choices?.[0]?.message?.content ?? "{}";
 
   let parsed: unknown;
   try {
@@ -92,12 +92,12 @@ export async function gerarComGroq(data: FormData): Promise<Mensagem[]> {
   const mensagens = coerceMensagens(parsed);
   const byAtalho = new Map(mensagens.map((m) => [m.atalho, m]));
 
-  // Mantém a ordem do catálogo e preenche o que faltar.
+  // Mantem a ordem do catalogo e preenche o que faltar
   const completas = CATALOGO.map((spec) => byAtalho.get(spec.atalho)).filter(
     (m): m is Mensagem => Boolean(m),
   );
 
-  // Inclui também mensagens extras que a IA tenha criado fora do catálogo.
+  // Inclui tambem mensagens extras que a IA tenha criado fora do catalogo
   const extras = mensagens.filter(
     (m) => !CATALOGO.some((c) => c.atalho === m.atalho),
   );
