@@ -19,6 +19,7 @@ function SucessoContent() {
   const [status, setStatus] = useState<Status>("checking");
   const [checking, setChecking] = useState(false);
   const [unlocking, setUnlocking] = useState(false);
+  const [attempts, setAttempts] = useState(0);
   const [message, setMessage] = useState("");
 
   const check = useCallback(async () => {
@@ -73,6 +74,17 @@ function SucessoContent() {
       setStatus("pending");
     }
   }, []); // só executa uma vez no mount
+
+  // Auto-retry: tenta 30 vezes (2 min) para esperar confirmação do PIX
+  useEffect(() => {
+    if (status !== "pending") return;
+    if (attempts >= 30) return;
+    const t = setTimeout(() => {
+      setAttempts((a) => a + 1);
+      check();
+    }, 4000);
+    return () => clearTimeout(t);
+  }, [status, attempts, check]);
 
   return (
     <main className="grid min-h-screen place-items-center bg-secondary/30 p-6">

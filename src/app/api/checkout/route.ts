@@ -15,13 +15,15 @@ import {
   createCheckout,
   parsePriceBrl,
 } from "@/lib/asaas";
+import { getServerSupabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
 /**
  * Inicia o pagamento.
- * - Sem ASAAS_API_KEY (demo): libera o acesso e leva direto ao formulário.
- * - Com ASAAS_API_KEY: cria um Checkout no Asaas (PIX/cartão) e retorna a URL.
+ * Salva o ref + user_id no Supabase ANTES de redirecionar,
+ * para que possamos encontrar o pagamento mesmo sem o ref na URL.
  */
 export async function POST() {
   const appUrl = getAppUrl();
@@ -45,6 +47,27 @@ export async function POST() {
       cancelUrl: `${appUrl}/painel`,
       expiredUrl: `${appUrl}/painel`,
     });
+
+    // Salva o checkout no banco (ref + user_id) para fallback
+    const authClient = await createClient();
+    const userId = authClient
+      ? (await authClient.auth.getUser()).data.user?.id
+      : null;
+
+    const supabase = getServerSupabase();
+    if (supabase) {
+      try {
+        await supabase.from("checkouts").upsert({
+          id: ref,
+          user_id: userId,
+          asaas_checkout_id: id,
+          status: "pending",
+          created_at: new Date().toISOString(),
+        });
+      } catch {
+        // não bloqueia
+      }
+    }
 
     return NextResponse.json({ url: link || asaasCheckoutUrl(id) });
   } catch (err) {
