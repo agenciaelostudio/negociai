@@ -8,6 +8,7 @@ import { CheckCircle2, Loader2, XCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Logo } from "@/components/logo";
+import { toast } from "sonner";
 
 type Status = "checking" | "paid" | "pending";
 
