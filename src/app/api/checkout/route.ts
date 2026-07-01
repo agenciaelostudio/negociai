@@ -16,16 +16,15 @@ import {
   parsePriceBrl,
 } from "@/lib/asaas";
 import { getServerSupabase } from "@/lib/supabase";
-import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
 /**
  * Inicia o pagamento.
- * Salva o ref + user_id no Supabase ANTES de redirecionar,
- * para que possamos encontrar o pagamento mesmo sem o ref na URL.
+ * O email é enviado pelo cliente (BuyButton) porque em alguns casos
+ * o Supabase SSR não consegue recuperar a sessão do servidor (PKCE bug).
  */
-export async function POST() {
+export async function POST(req: Request) {
   const appUrl = getAppUrl();
   const price = parsePriceBrl(process.env.NEXT_PUBLIC_PRICE_BRL);
 
@@ -38,6 +37,15 @@ export async function POST() {
     return res;
   }
 
+  // Email enviado pelo cliente (BuyButton) — fonte de verdade da identidade
+  let email = "";
+  try {
+    const body = await req.json();
+    email = String(body?.email || "").trim().toLowerCase();
+  } catch {
+    // corpo vazio ou inválido
+  }
+
   try {
     const ref = crypto.randomUUID();
     const { id, link } = await createCheckout(process.env.ASAAS_API_KEY!, {
@@ -48,21 +56,14 @@ export async function POST() {
       expiredUrl: `${appUrl}/painel`,
     });
 
-    // Salva o checkout no banco (ref + user_id + email) para fallback
-    const authClient = await createClient();
-    const user = authClient
-      ? (await authClient.auth.getUser()).data.user
-      : null;
-    const userId = user?.id || null;
-    const userEmail = user?.email || null;
-
+    // Salva o checkout no banco com o email (fallback principal)
     const supabase = getServerSupabase();
-    if (supabase) {
+    if (supabase && email) {
       try {
         await supabase.from("checkouts").upsert({
           id: ref,
-          user_id: userId,
-          email: userEmail,
+          email,
+          user_id: null, // será preenchido depois se a sessão for recuperada
           asaas_checkout_id: id,
           status: "pending",
           created_at: new Date().toISOString(),

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 
 export function BuyButton({
   children,
@@ -17,7 +18,17 @@ export function BuyButton({
   async function handleClick() {
     setLoading(true);
     try {
-      const res = await fetch("/api/checkout", { method: "POST" });
+      // Obtém o email do usuário do lado do cliente
+      // (onde a sessão SEMPRE está disponível, ao contrário do server-side)
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      const email = user?.email || "";
+
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
       if (!res.ok) throw new Error("checkout");
       const data: { url?: string } = await res.json();
       if (!data.url) throw new Error("sem url");
