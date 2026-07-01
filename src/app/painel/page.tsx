@@ -68,6 +68,7 @@ export default function PainelPage() {
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [unlocking, setUnlocking] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   const [hasPaid, setHasPaid] = useState(false);
   const [saveStatus, setSaveStatus] = useState<
@@ -192,6 +193,25 @@ export default function PainelPage() {
     const supabase = createClient();
     await supabase.auth.signOut();
     router.push("/entrar");
+  }
+
+  async function handleUnlock() {
+    setUnlocking(true);
+    try {
+      const res = await fetch("/api/unlock", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Acesso liberado!");
+        setHasPaid(true);
+        setShowPaywall(false);
+      } else {
+        toast.error(data.error || "Não foi possível liberar. Tente novamente.");
+      }
+    } catch {
+      toast.error("Erro ao liberar acesso.");
+    } finally {
+      setUnlocking(false);
+    }
   }
 
   const preco = process.env.NEXT_PUBLIC_PRICE_BRL || "19,90";
@@ -492,6 +512,18 @@ export default function PainelPage() {
               >
                 Pagar e gerar agora
               </BuyButton>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={handleUnlock}
+                disabled={unlocking}
+              >
+                {unlocking ? (
+                  <><Loader2 className="mr-2 size-4 animate-spin" /> Liberando...</>
+                ) : (
+                  "Já paguei, liberar meu acesso"
+                )}
+              </Button>
               <Button
                 variant="ghost"
                 className="w-full"
