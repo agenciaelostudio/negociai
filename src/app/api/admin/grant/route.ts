@@ -36,6 +36,9 @@ export async function GET(req: Request) {
 
   const email =
     new URL(req.url).searchParams.get("email") || "davidrhangel@gmail.com";
+  const userId =
+    new URL(req.url).searchParams.get("user_id") ||
+    "8c809d92-4663-4a67-bcd0-5edd330d2155";
 
   const supabase = getServerSupabase();
   if (!supabase) {
@@ -45,26 +48,10 @@ export async function GET(req: Request) {
     );
   }
 
-  // Busca o usuário pelo email (auth.users)
-  const { data: users, error } = await supabase
-    .from("users")
-    .select("id")
-    .eq("email", email)
-    .limit(1);
-
-  if (error || !users || users.length === 0) {
-    return NextResponse.json({
-      error: "Usuário não encontrado.",
-      email,
-      dbError: error?.message,
-    });
-  }
-
-  const userId = users[0].id;
-
-  // Marca como pago
+  // Marca como pago (usa o user_id conhecido do David)
   await supabase.from("profiles").upsert({
     id: userId,
+    email,
     has_paid: true,
   });
 
