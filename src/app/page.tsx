@@ -788,6 +788,14 @@ export default function LandingPage() {
       <footer className="border-t border-border/40">
         <div className="container flex flex-col items-center justify-between gap-4 py-8 text-sm text-muted-foreground sm:flex-row">
           <Logo className="text-base" iconClassName="size-4" />
+          <div className="flex items-center gap-4">
+            <Link href="/termos" className="hover:text-foreground transition-colors">
+              Termos
+            </Link>
+            <Link href="/politica-de-privacidade" className="hover:text-foreground transition-colors">
+              Privacidade
+            </Link>
+          </div>
           <p>
             © {new Date().getFullYear()} NegociAí. Todos os direitos reservados.
           </p>
