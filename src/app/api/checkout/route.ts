@@ -48,11 +48,13 @@ export async function POST() {
       expiredUrl: `${appUrl}/painel`,
     });
 
-    // Salva o checkout no banco (ref + user_id) para fallback
+    // Salva o checkout no banco (ref + user_id + email) para fallback
     const authClient = await createClient();
-    const userId = authClient
-      ? (await authClient.auth.getUser()).data.user?.id
+    const user = authClient
+      ? (await authClient.auth.getUser()).data.user
       : null;
+    const userId = user?.id || null;
+    const userEmail = user?.email || null;
 
     const supabase = getServerSupabase();
     if (supabase) {
@@ -60,6 +62,7 @@ export async function POST() {
         await supabase.from("checkouts").upsert({
           id: ref,
           user_id: userId,
+          email: userEmail,
           asaas_checkout_id: id,
           status: "pending",
           created_at: new Date().toISOString(),

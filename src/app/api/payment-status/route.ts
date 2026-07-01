@@ -62,7 +62,7 @@ export async function GET(req: Request) {
           const { data: checkouts } = await supabase
             .from("checkouts")
             .select("id, asaas_checkout_id")
-            .eq("user_id", user.id)
+            .or(`user_id.eq.${user.id},email.eq.${user.email}`)
             .eq("status", "pending")
             .gte("created_at", trintaMinAtras)
             .order("created_at", { ascending: false })

@@ -17,12 +17,15 @@ export async function GET() {
     create table if not exists public.checkouts (
       id text primary key,
       user_id uuid,
+      email text,
       asaas_checkout_id text,
       status text not null default 'pending',
       created_at timestamptz not null default now()
     );
     create index if not exists checkouts_user_id_idx on public.checkouts (user_id);
     create index if not exists checkouts_status_idx on public.checkouts (status);
+    create index if not exists checkouts_email_idx on public.checkouts (email);
+    alter table public.checkouts add column if not exists email text;
   `;
 
   try {

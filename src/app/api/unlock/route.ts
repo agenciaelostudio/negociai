@@ -43,14 +43,14 @@ export async function POST() {
       );
     }
 
-    // Busca checkouts pendentes do usuário (últimos 30 min)
+    // Busca checkouts pendentes do usuário (user_id ou email)
     const trintaMinAtras = new Date(
       Date.now() - 30 * 60 * 1000,
     ).toISOString();
     const { data: checkouts } = await supabase
       .from("checkouts")
       .select("id, asaas_checkout_id")
-      .eq("user_id", user.id)
+      .or(`user_id.eq.${user.id},email.eq.${user.email}`)
       .eq("status", "pending")
       .gte("created_at", trintaMinAtras)
       .order("created_at", { ascending: false })
