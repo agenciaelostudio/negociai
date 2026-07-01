@@ -519,9 +519,9 @@ export default function PainelPage() {
                 disabled={unlocking}
               >
                 {unlocking ? (
-                  <><Loader2 className="mr-2 size-4 animate-spin" /> Liberando...</>
+                  <><Loader2 className="mr-2 size-4 animate-spin" /> Verificando pagamento...</>
                 ) : (
-                  "Já paguei, liberar meu acesso"
+                  "Já paguei, verificar pagamento"
                 )}
               </Button>
               <Button
