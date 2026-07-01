@@ -56,6 +56,42 @@ export async function POST() {
       .order("created_at", { ascending: false })
       .limit(5);
 
+    // Também verifica se já foi pago anteriormente (perfil)
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("has_paid")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profile?.has_paid) {
+      // Já foi marcado como pago anteriormente — só re-emite o cookie
+      const res = NextResponse.json({
+        success: true,
+        message: "Acesso já liberado anteriormente. Redirecionando...",
+      });
+      res.cookies.set(ACCESS_COOKIE, createAccessToken(), ACCESS_COOKIE_OPTIONS);
+      return res;
+    }
+
+    // Também verifica se há pagamentos confirmados no banco
+    const { data: payments } = await supabase
+      .from("payments")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("status", "confirmed")
+      .limit(1);
+
+    if (payments && payments.length > 0) {
+      // Pagamento já registrado — libera
+      await supabase.from("profiles").upsert({ id: user.id, has_paid: true });
+      const res = NextResponse.json({
+        success: true,
+        message: "Pagamento já confirmado anteriormente. Redirecionando...",
+      });
+      res.cookies.set(ACCESS_COOKIE, createAccessToken(), ACCESS_COOKIE_OPTIONS);
+      return res;
+    }
+
     if (!checkouts || checkouts.length === 0) {
       return NextResponse.json({
         success: false,
