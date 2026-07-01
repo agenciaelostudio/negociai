@@ -17,6 +17,7 @@ function SucessoContent() {
   const ref = params.get("ref");
   const [status, setStatus] = useState<Status>("checking");
   const [checking, setChecking] = useState(false);
+  const [unlocking, setUnlocking] = useState(false);
   const [message, setMessage] = useState("");
 
   const check = useCallback(async () => {
@@ -45,6 +46,24 @@ function SucessoContent() {
       setChecking(false);
     }
   }, [ref, router]);
+
+  const unlock = useCallback(async () => {
+    setUnlocking(true);
+    try {
+      const res = await fetch("/api/unlock", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("paid");
+        setTimeout(() => router.push("/painel"), 1200);
+      } else {
+        toast.error(data.error || "Não foi possível liberar. Tente novamente.");
+      }
+    } catch {
+      toast.error("Erro ao liberar acesso. Tente novamente.");
+    } finally {
+      setUnlocking(false);
+    }
+  }, [router]);
 
   useEffect(() => {
     if (ref) check();
@@ -93,6 +112,13 @@ function SucessoContent() {
                     <><Loader2 className="mr-2 size-4 animate-spin" /> Verificando...</>
                   ) : (
                     "Verificar novamente"
+                  )}
+                </Button>
+                <Button variant="secondary" onClick={unlock} disabled={unlocking}>
+                  {unlocking ? (
+                    <><Loader2 className="mr-2 size-4 animate-spin" /> Liberando...</>
+                  ) : (
+                    "Já paguei, liberar meu acesso"
                   )}
                 </Button>
                 <Button asChild variant="ghost">
