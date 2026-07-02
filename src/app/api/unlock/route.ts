@@ -5,7 +5,7 @@ import {
   ACCESS_COOKIE_OPTIONS,
   createAccessToken,
 } from "@/lib/access";
-import { isCheckoutPaidByRef } from "@/lib/asaas";
+import { isCheckoutPaidByRef, findRecentPaidCheckouts } from "@/lib/asaas";
 import { getServerSupabase } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase/server";
 
@@ -93,6 +93,40 @@ export async function POST() {
     }
 
     if (!checkouts || checkouts.length === 0) {
+      // Fallback: busca pagamentos recentes no Asaas pelo email
+      try {
+        const paid = await findRecentPaidCheckouts(
+          process.env.ASAAS_API_KEY!,
+          user.email!,
+          72,
+        );
+        if (paid) {
+          // Pagamento encontrado! Salva no banco e libera
+          await supabase.from("checkouts").upsert({
+            id: paid.ref,
+            user_id: user.id,
+            email: user.email,
+            asaas_checkout_id: paid.id,
+            status: "confirmed",
+          });
+          await supabase.from("payments").insert({
+            user_id: user.id,
+            plan: "negociai",
+            amount: Number(process.env.NEXT_PUBLIC_PRICE_BRL || "19.90"),
+            status: "confirmed",
+          });
+          await supabase.from("profiles").upsert({ id: user.id, has_paid: true });
+          const res = NextResponse.json({
+            success: true,
+            message: "Pagamento encontrado no Asaas! Acesso liberado.",
+          });
+          res.cookies.set(ACCESS_COOKIE, createAccessToken(), ACCESS_COOKIE_OPTIONS);
+          return res;
+        }
+      } catch {
+        // fallback interno falhou
+      }
+
       return NextResponse.json({
         success: false,
         error: "Nenhum pagamento pendente encontrado. Faça o pagamento primeiro.",

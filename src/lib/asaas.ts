@@ -133,6 +133,46 @@ export async function createCheckout(
 
 const PAID_STATUSES = new Set(["PAID", "RECEIVED", "CONFIRMED"]);
 
+interface AsaasCheckout {
+  id: string;
+  externalReference?: string;
+  status: string;
+  email?: string;
+  customer?: string;
+  value?: number;
+  dateCreated?: string;
+}
+
+/**
+ * Consulta checkouts recentes do Asaas (últimas N horas).
+ * Usado pelo /api/unlock como fallback quando nenhum checkout
+ * pendente é encontrado no banco local.
+ */
+export async function findRecentPaidCheckouts(
+  token: string,
+  email: string,
+  hoursBack = 48,
+): Promise<{ ref: string; id: string } | null> {
+  const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
+  const url = `${asaasApiBase()}/checkouts?dateCreated[ge]=${encodeURIComponent(since)}&limit=20`;
+  const res = await fetch(url, { headers: headers(token), cache: "no-store" });
+  if (!res.ok) return null;
+
+  const data = (await res.json()) as { data?: AsaasCheckout[] };
+  const list = Array.isArray(data.data) ? data.data : [];
+
+  for (const checkout of list) {
+    if (!checkout.status || !PAID_STATUSES.has(checkout.status.toUpperCase())) continue;
+    if (!checkout.externalReference) continue;
+    // Verifica se o email do comprador corresponde
+    if (checkout.email?.toLowerCase().trim() === email.toLowerCase().trim()) {
+      return { ref: checkout.externalReference, id: checkout.id };
+    }
+  }
+
+  return null;
+}
+
 /**
  * Consulta os checkouts por externalReference e indica se algum já foi pago.
  * Usamos o externalReference (gerado por nós) porque ele é conhecido antes de
