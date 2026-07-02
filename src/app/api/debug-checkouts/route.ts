@@ -29,7 +29,9 @@ export async function GET() {
       },
     );
 
-    const data = await res.json();
+    const text = await res.text();
+    let data: any;
+    try { data = JSON.parse(text); } catch { data = { rawText: text.slice(0, 1000) }; }
 
     // Mostra a estrutura do primeiro checkout pago (se houver)
     const list = Array.isArray(data.data) ? data.data : [];
