@@ -2,58 +2,54 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
+function cleanKey(key: string): string {
+  return key.replace(/^[\uFEFF"']|["']$/g, "").trim();
+}
+
 /**
- * Debug: mostra os últimos checkouts do Asaas para depuração.
+ * Debug: testa diferentes endpoints do Asaas para encontrar checkouts.
  */
 export async function GET() {
-  const key = process.env.ASAAS_API_KEY || "";
-  if (!key) {
-    return NextResponse.json({ error: "ASAAS_API_KEY não configurada" });
-  }
+  const key = cleanKey(process.env.ASAAS_API_KEY || "");
+  if (!key) return NextResponse.json({ error: "ASAAS_API_KEY não configurada" });
 
   const env = key.includes("_prod_") ? "production" : "sandbox";
   const base = env === "production"
     ? "https://api.asaas.com/v3"
     : "https://api-sandbox.asaas.com/v3";
 
-  const since = new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString();
+  const headers = { access_token: key, "Content-Type": "application/json" };
 
-  try {
-    const res = await fetch(
-      `${base}/checkouts?limit=5&dateCreated[ge]=${encodeURIComponent(since)}`,
-      {
-        headers: {
-          access_token: key.replace(/^[\uFEFF"']|["']$/g, "").trim(),
-          "Content-Type": "application/json",
-        },
-      },
-    );
+  const testEndpoints = [
+    `${base}/checkouts?limit=1`,
+    `${base}/checkoutSessions?limit=1`,
+    `${base}/payments?limit=1`,
+    `${base}/customers?limit=1`,
+  ];
 
-    const text = await res.text();
-    let data: any;
-    try { data = JSON.parse(text); } catch { data = { rawText: text.slice(0, 1000) }; }
+  const results: Record<string, any> = { env, base };
 
-    // Mostra a estrutura do primeiro checkout pago (se houver)
-    const list = Array.isArray(data.data) ? data.data : [];
-    const paid = list.filter((c: any) =>
-      ["PAID", "RECEIVED", "CONFIRMED"].includes(c?.status?.toUpperCase?.())
-    );
+  for (const url of testEndpoints) {
+    try {
+      const res = await fetch(url, { headers });
+      const text = await res.text();
+      let data: any;
+      try { data = JSON.parse(text); } catch { data = { raw: text.slice(0, 500) }; }
 
-    return NextResponse.json({
-      status: res.status,
-      env,
-      totalCheckouts: list.length,
-      totalPaid: paid.length,
-      fieldsDisponiveis: list.length > 0 ? Object.keys(list[0]) : [],
-      primeiroCheckout: list[0] || null,
-      primeiroPago: paid[0] || null,
-      raw: data,
-    });
-  } catch (err) {
-    return NextResponse.json({
-      error: String(err),
-      env,
-      base,
-    });
+      const name = url.replace(base, "");
+      results[name] = {
+        status: res.status,
+        ok: res.ok,
+        hasData: Array.isArray(data?.data),
+        count: Array.isArray(data?.data) ? data.data.length : "N/A",
+        fields: Array.isArray(data?.data) && data.data.length > 0 ? Object.keys(data.data[0]) : [],
+        sample: Array.isArray(data?.data) && data.data.length > 0 ? data.data[0] : null,
+        error: data.errors || data.error || null,
+      };
+    } catch (err) {
+      results[url.replace(base, "")] = { error: String(err) };
+    }
   }
+
+  return NextResponse.json(results);
 }
