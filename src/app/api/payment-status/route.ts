@@ -6,7 +6,7 @@ import {
   createAccessToken,
   paymentsEnabled,
 } from "@/lib/access";
-import { isCheckoutPaidByRef } from "@/lib/asaas";
+import { isCheckoutPaidByRef, findRecentPaidCheckouts } from "@/lib/asaas";
 import { getServerSupabase } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase/server";
 
@@ -87,6 +87,31 @@ export async function GET(req: Request) {
               } catch {
                 continue;
               }
+            }
+          }
+
+          // Fallback: busca pagamentos recentes no Asaas pelo email
+          if (!paid && user.email) {
+            try {
+              const paidCheckout = await findRecentPaidCheckouts(
+                process.env.ASAAS_API_KEY!,
+                user.email,
+                72,
+              );
+              if (paidCheckout) {
+                paid = true;
+                foundRef = paidCheckout.ref;
+                // Registra no banco
+                await supabase.from("checkouts").upsert({
+                  id: paidCheckout.ref,
+                  user_id: user.id,
+                  email: user.email,
+                  asaas_checkout_id: paidCheckout.id,
+                  status: "confirmed",
+                });
+              }
+            } catch {
+              // fallback falhou
             }
           }
         } catch (err) {
