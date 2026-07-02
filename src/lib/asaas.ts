@@ -32,7 +32,7 @@ function sanitizeToken(token: string): string {
   return token.replace(/^\uFEFF/, "").trim().replace(/^["']|["']$/g, "");
 }
 
-function headers(token: string): HeadersInit {
+export function headers(token: string): HeadersInit {
   return {
     "Content-Type": "application/json",
     access_token: sanitizeToken(token),
@@ -144,45 +144,65 @@ interface AsaasCheckout {
 }
 
 /**
- * Consulta checkouts recentes do Asaas (últimas N horas).
- * Usado pelo /api/unlock como fallback quando nenhum checkout
- * pendente é encontrado no banco local.
+ * Busca pagamentos recentes no Asaas pelo email do cliente.
+ * 1. Encontra o customer ID pelo email (/customers)
+ * 2. Busca payments desse customer nos últimos N dias (/payments)
+ * 3. Retorna o primeiro pago
  */
 export async function findRecentPaidCheckouts(
   token: string,
   email: string,
-  hoursBack = 48,
+  hoursBack = 72,
 ): Promise<{ ref: string; id: string } | null> {
-  const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
-  const url = `${asaasApiBase()}/checkouts?dateCreated[ge]=${encodeURIComponent(since)}&limit=20`;
-  const res = await fetch(url, { headers: headers(token), cache: "no-store" });
-  if (!res.ok) return null;
+  const base = asaasApiBase();
+  const h = headers(token);
 
-  const data = (await res.json()) as { data?: AsaasCheckout[] };
-  const list = Array.isArray(data.data) ? data.data : [];
+  // 1. Busca customer pelo email
+  try {
+    const custRes = await fetch(
+      `${base}/customers?email=${encodeURIComponent(email)}`,
+      { headers: h, cache: "no-store" },
+    );
+    if (!custRes.ok) return null;
+    const custData = (await custRes.json()) as { data?: Array<{ id: string }> };
+    const customers = Array.isArray(custData.data) ? custData.data : [];
+    if (customers.length === 0) return null;
 
-  for (const checkout of list) {
-    if (!checkout.status || !PAID_STATUSES.has(checkout.status.toUpperCase())) continue;
-    if (!checkout.externalReference) continue;
-    // Verifica se o email do comprador corresponde
-    if (checkout.email?.toLowerCase().trim() === email.toLowerCase().trim()) {
-      return { ref: checkout.externalReference, id: checkout.id };
+    const customerId = customers[0].id;
+
+    // 2. Busca payments desse customer nas últimas horas
+    const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000).toISOString();
+    const payRes = await fetch(
+      `${base}/payments?customer=${customerId}&dateCreated[ge]=${encodeURIComponent(since)}&limit=20`,
+      { headers: h, cache: "no-store" },
+    );
+    if (!payRes.ok) return null;
+    const payData = (await payRes.json()) as {
+      data?: Array<{ id: string; externalReference?: string; status: string }>;
+    };
+    const payments = Array.isArray(payData.data) ? payData.data : [];
+
+    for (const payment of payments) {
+      if (!payment.status || !PAID_STATUSES.has(payment.status.toUpperCase())) continue;
+      if (!payment.externalReference) continue;
+      return { ref: payment.externalReference, id: payment.id };
     }
+  } catch {
+    return null;
   }
 
   return null;
 }
 
 /**
- * Consulta os checkouts por externalReference e indica se algum já foi pago.
- * Usamos o externalReference (gerado por nós) porque ele é conhecido antes de
- * criar o checkout, permitindo montar a successUrl de retorno.
+ * Consulta um pagamento (payment) no Asaas pelo externalReference.
+ * Usamos /payments (não /checkouts, que não tem leitura).
  */
 export async function isCheckoutPaidByRef(
   token: string,
   externalReference: string,
 ): Promise<boolean> {
-  const url = `${asaasApiBase()}/checkouts?externalReference=${encodeURIComponent(
+  const url = `${asaasApiBase()}/payments?externalReference=${encodeURIComponent(
     externalReference,
   )}`;
   const res = await fetch(url, { headers: headers(token), cache: "no-store" });
